@@ -5,7 +5,6 @@ import { ErrorBoundary } from "@/lib/error-component";
 import { Home } from "@/pages/home";
 import { Login } from "@/pages/login";
 import { Onboarding } from "@/pages/onboarding";
-import { DevicePage } from "@/pages/dispositivo";
 import { InstallPage } from "@/pages/instalar";
 import { AppShell } from "@/pages/app-shell";
 import { Dashboard } from "@/pages/app/dashboard";
@@ -16,7 +15,6 @@ function App() {
     /* @__PURE__ */ jsx(Route, { path: "/", element: /* @__PURE__ */ jsx(Home, {}) }),
     /* @__PURE__ */ jsx(Route, { path: "/login", element: /* @__PURE__ */ jsx(Login, {}) }),
     /* @__PURE__ */ jsx(Route, { path: "/onboarding", element: /* @__PURE__ */ jsx(Onboarding, {}) }),
-    /* @__PURE__ */ jsx(Route, { path: "/dispositivo", element: /* @__PURE__ */ jsx(DevicePage, {}) }),
     /* @__PURE__ */ jsx(Route, { path: "/instalar", element: /* @__PURE__ */ jsx(InstallPage, {}) }),
     /* @__PURE__ */ jsxs(Route, { path: "/app", element: /* @__PURE__ */ jsx(AppShell, {}), children: [
       /* @__PURE__ */ jsx(Route, { index: true, element: /* @__PURE__ */ jsx(Dashboard, {}) }),

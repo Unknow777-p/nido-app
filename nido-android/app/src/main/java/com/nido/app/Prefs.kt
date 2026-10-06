@@ -20,6 +20,10 @@ object Prefs {
     fun locked(ctx: Context): Boolean = sp(ctx).getBoolean(K_LOCKED, false)
     fun saveLocked(ctx: Context, v: Boolean) = sp(ctx).edit().putBoolean(K_LOCKED, v).apply()
 
+    private const val K_ADMIN = "adminEnabled"
+    fun adminEnabled(ctx: Context): Boolean = sp(ctx).getBoolean(K_ADMIN, false)
+    fun saveAdminEnabled(ctx: Context, v: Boolean) = sp(ctx).edit().putBoolean(K_ADMIN, v).apply()
+
     fun blockedApps(ctx: Context): Set<String> =
         sp(ctx).getStringSet(K_BLOCKED_APPS, emptySet()) ?: emptySet()
 

@@ -97,7 +97,6 @@ function SettingsPage() {
       }
     ),
     /* @__PURE__ */ jsx(InstallNido, { audience: "family" }),
-    /* @__PURE__ */ jsx(Button, { variant: "outline", asChild: true, children: /* @__PURE__ */ jsx(Link, { to: "/dispositivo", children: "Abrir vinculaci\xF3n" }) }),
     /* @__PURE__ */ jsxs("section", { className: "space-y-2", children: [
       /* @__PURE__ */ jsx("h2", { className: "font-display text-xl font-semibold", children: "Ayuda" }),
       /* @__PURE__ */ jsx("p", { className: "text-sm leading-relaxed text-muted", children: "Si el ni\xF1o sale de Nido, inst\xE1lala en la pantalla de inicio de la tablet. PIN olvidado: entra con el correo de tutor y c\xE1mbialo aqu\xED. C\xF3digo caducado: genera otro en el perfil del hijo." }),

@@ -98,7 +98,7 @@ class MainActivity : Activity() {
             text = "Pedile al tutor el código de vinculación (en su perfil → Dispositivo → Generar código)."
             setPadding(0, 0, 0, 16)
         }
-        val codeInput = EditText(this).apply { hint = "Código, ej. XB7K2P" }
+        val codeInput = EditText(this).apply { this.hint = "Código, ej. XB7K2P" }
         val status = TextView(this).apply {
             text = if (Prefs.token(this@MainActivity) != null) "Dispositivo vinculado ✅" else "Sin vincular"
             setPadding(0, 16, 0, 0)
@@ -136,6 +136,22 @@ class MainActivity : Activity() {
                 startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
             }
         }
+        val adminBtn = Button(this).apply {
+            text = "Proteger contra desinstalación"
+            setOnClickListener {
+                Toast.makeText(this@MainActivity, "Abriendo ajustes de administrador...", Toast.LENGTH_SHORT).show()
+                try {
+                    val intent = Intent(android.app.admin.DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN)
+                    intent.putExtra(android.app.admin.DevicePolicyManager.EXTRA_DEVICE_ADMIN,
+                        android.content.ComponentName(this@MainActivity, NidoDeviceAdminReceiver::class.java))
+                    intent.putExtra(android.app.admin.DevicePolicyManager.EXTRA_ADD_EXPLANATION,
+                        "Nido necesita ser administrador para evitar que el niño desinstale la app sin permiso.")
+                    startActivity(intent)
+                } catch (e: Exception) {
+                    Toast.makeText(this@MainActivity, "Error: ${e.message}", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
         root.addView(backBtn)
         root.addView(title)
         root.addView(hint)
@@ -143,6 +159,7 @@ class MainActivity : Activity() {
         root.addView(pairBtn)
         root.addView(status)
         root.addView(accessBtn)
+        root.addView(adminBtn)
         val scroll = ScrollView(this).apply {
             addView(root)
             setBackgroundColor(0xFFF3EFE6.toInt())

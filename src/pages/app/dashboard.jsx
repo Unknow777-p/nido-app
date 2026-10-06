@@ -1,7 +1,7 @@
 import { jsx, jsxs } from "react/jsx-runtime";
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Clock3, Pause, Play, Plus, Smartphone } from "lucide-react";
+import { Clock3, Pause, Play, Plus } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { AvatarBlob } from "@/components/avatar-blob";
@@ -13,12 +13,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { clock, clockFamily } from "@/lib/family/clock";
 import { getActiveFamilyId, setActiveFamilyId } from "@/lib/family/active";
-import { writeDeviceToken } from "@/lib/family/device-store";
 import {
   addChild,
   getFamily,
   grantExtraTime,
-  parentOpenChildDevice,
   respondTimeRequest,
   setChildPaused
 } from "@/lib/family/api";
@@ -170,17 +168,6 @@ function Dashboard() {
       ChildCard,
       {
         child,
-        onOpenDevice: async () => {
-          try {
-            const res = await parentOpenChildDevice({
-              data: { childId: child.id, ...clock() }
-            });
-            writeDeviceToken(res.token);
-            await navigate("/dispositivo");
-          } catch (err) {
-            toast.error(err instanceof Error ? err.message : "No se pudo abrir");
-          }
-        },
         onGrant: async (minutes) => {
           try {
             await grantExtraTime({ data: { childId: child.id, minutes, localDate: clock().localDate } });
@@ -206,7 +193,6 @@ function Dashboard() {
 }
 function ChildCard({
   child,
-  onOpenDevice,
   onGrant,
   onPause
 }) {
@@ -266,10 +252,7 @@ function ChildCard({
           ]
         }
       ),
-      /* @__PURE__ */ jsxs(Button, { variant: "secondary", size: "sm", onClick: onOpenDevice, children: [
-        /* @__PURE__ */ jsx(Smartphone, { className: "size-4" }),
-        "Modo ni\xF1o"
-      ] })
+      ""
     ] })
   ] });
 }

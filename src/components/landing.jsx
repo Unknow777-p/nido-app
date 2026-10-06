@@ -10,7 +10,6 @@ function Landing() {
     /* @__PURE__ */ jsxs("header", { className: "mx-auto flex max-w-5xl items-center justify-between px-5 py-5", children: [
       /* @__PURE__ */ jsx(Wordmark, {}),
       /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
-        /* @__PURE__ */ jsx(Button, { variant: "ghost", size: "sm", asChild: true, children: /* @__PURE__ */ jsx(Link, { to: "/dispositivo", children: "Vincular" }) }),
         /* @__PURE__ */ jsx(Button, { size: "sm", asChild: true, children: /* @__PURE__ */ jsx(Link, { to: "/login", children: "Entrar" }) })
       ] })
     ] }),
@@ -22,7 +21,6 @@ function Landing() {
           /* @__PURE__ */ jsx("p", { className: "mt-4 max-w-md text-base leading-relaxed text-muted", children: "Nido asigna un cupo semanal, bloquea contenido sexual y peligroso, y te deja vigilar el uso desde tu tel\xE9fono \u2014 con un PIN que solo el tutor conoce. 30 d\xEDas de prueba, luego $3.99 al mes por familia." }),
           /* @__PURE__ */ jsxs("div", { className: "mt-7 flex flex-col gap-3 sm:flex-row", children: [
             /* @__PURE__ */ jsx(Button, { size: "lg", asChild: true, children: /* @__PURE__ */ jsx(Link, { to: "/login", children: "Crear familia" }) }),
-            /* @__PURE__ */ jsx(Button, { size: "lg", variant: "outline", asChild: true, children: /* @__PURE__ */ jsx(Link, { to: "/dispositivo", children: "Soy el dispositivo del ni\xF1o" }) })
           ] })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "rounded-xl bg-surface p-5 shadow-[var(--shadow-card)]", children: [
