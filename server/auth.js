@@ -19,7 +19,13 @@ const auth = betterAuth({
   database,
   trustedOrigins: [...origins],
   emailAndPassword: { enabled: true },
-  session: { cookieCache: { enabled: true, maxAge: 300 } }
+  session: { cookieCache: { enabled: true, maxAge: 300 } },
+  advanced: {
+    ipAddress: {
+      ipAddressHeaders: ["x-forwarded-for", "x-real-ip"],
+      trustedProxies: ["0.0.0.0/0", "::/0"]
+    }
+  }
 });
 function toHeaders(req) {
   const headers = new Headers();
