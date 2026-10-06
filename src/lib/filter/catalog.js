@@ -63,6 +63,27 @@ const CATALOG_APPS = [
     description: "Mensajer\xEDa."
   },
   {
+    id: "telegram",
+    name: "Telegram",
+    hosts: ["telegram.org", "web.telegram.org", "t.me"],
+    category: "social",
+    description: "Mensajer\xEDa. Bloqueable."
+  },
+  {
+    id: "telegramx",
+    name: "Telegram X",
+    hosts: ["telegram.org"],
+    category: "social",
+    description: "Variante de Telegram."
+  },
+  {
+    id: "telegramweb",
+    name: "Telegram Web",
+    hosts: ["web.telegram.org"],
+    category: "social",
+    description: "Mensajer\xEDa v\xEDa navegador."
+  },
+  {
     id: "twitch",
     name: "Twitch",
     hosts: ["twitch.tv"],
