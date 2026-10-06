@@ -1,0 +1,9 @@
+node_modules
+dist
+.env
+.data
+nido-android/.gradle
+nido-android/app/build
+nido-android/build
+
+nido-android/local.properties

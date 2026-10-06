@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowJs": true,
+    "paths": { "@/*": ["./src/*"] }
+  },
+  "include": ["src", "server"]
+}
+

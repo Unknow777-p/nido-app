@@ -1,0 +1,85 @@
+@import url("https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;650&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,650&display=swap");
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@theme {
+  --font-sans: "Figtree", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Fraunces", ui-serif, Georgia, "Times New Roman", serif;
+
+  --color-bg: #f3efe6;
+  --color-bg-warm: #e7dfcf;
+  --color-surface: #fbf8f1;
+  --color-surface-2: #efe8d8;
+  --color-ink: #1b241f;
+  --color-muted: #5e6a63;
+  --color-subtle: #8a938c;
+  --color-primary: #1e4f40;
+  --color-primary-fg: #f6f1e8;
+  --color-moss: #2f6f5b;
+  --color-border: #ddd4c4;
+  --color-danger: #8f2d2d;
+  --color-ok: #1e4f40;
+  --color-warn: #7a5420;
+  --color-ring: #1e4f40;
+  --color-pine: #1e4f40;
+  --color-clay: #6e4a38;
+  --color-dusk: #3d4c5c;
+  --color-slate-av: #4a5854;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 28px;
+
+  --shadow-card: 0 0 0 1px rgb(27 36 31 / 0.06), 0 1px 2px rgb(27 36 31 / 0.04),
+    0 8px 24px rgb(27 36 31 / 0.04);
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html,
+  body,
+  #app {
+    min-height: 100%;
+  }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  body.nido-kiosk {
+    user-select: none;
+    overscroll-behavior: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
