@@ -7,3 +7,5 @@ nido-android/app/build
 nido-android/build
 
 nido-android/local.properties
+
+nido-debug.apk

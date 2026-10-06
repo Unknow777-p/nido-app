@@ -11,7 +11,7 @@ object Prefs {
 
     private fun sp(ctx: Context) = ctx.getSharedPreferences(FILE, Context.MODE_PRIVATE)
 
-    fun baseUrl(ctx: Context): String = sp(ctx).getString(K_URL, "http://192.168.18.13:3002")!!
+    fun baseUrl(ctx: Context): String = sp(ctx).getString(K_URL, "https://nido-app-k7fl.onrender.com")!!
     fun saveBaseUrl(ctx: Context, v: String) = sp(ctx).edit().putString(K_URL, v).apply()
 
     fun token(ctx: Context): String? = sp(ctx).getString(K_TOKEN, null)

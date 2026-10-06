@@ -19,7 +19,7 @@ import java.util.Locale
 
 class MainActivity : Activity() {
 
-    private val WEB_URL = "http://192.168.18.13:5175"
+    private val WEB_URL = "https://nido-app-k7fl.onrender.com"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,30 +29,38 @@ class MainActivity : Activity() {
             setPadding(48, 96, 48, 48)
         }
 
+        root.setBackgroundColor(0xFFF3EFE6.toInt())
         val title = TextView(this).apply {
             text = "Nido"
-            textSize = 36f
+            textSize = 42f
+            setTypeface(null, android.graphics.Typeface.BOLD)
             setTextColor(0xFF1E4F40.toInt())
             gravity = Gravity.CENTER
+            setPadding(0, 48, 0, 8)
         }
         val subtitle = TextView(this).apply {
             text = "¿Cómo vas a usar Nido?"
             textSize = 16f
             gravity = Gravity.CENTER
-            setPadding(0, 12, 0, 48)
+            setTextColor(0xFF4A5D56.toInt())
+            setPadding(0, 0, 0, 48)
         }
         val tutorBtn = Button(this).apply {
             text = "Soy tutor / padre"
+            textSize = 17f
             setTextColor(0xFFF3EFE6.toInt())
             setBackgroundColor(0xFF1E4F40.toInt())
+            setPadding(32, 24, 32, 24)
             setOnClickListener {
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(WEB_URL)))
             }
         }
         val childBtn = Button(this).apply {
             text = "Soy niño / estudiante"
+            textSize = 17f
             setTextColor(0xFFF3EFE6.toInt())
             setBackgroundColor(0xFF1E4F40.toInt())
+            setPadding(32, 24, 32, 24)
             setOnClickListener { showPairing() }
         }
 
