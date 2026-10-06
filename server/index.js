@@ -67,7 +67,7 @@ function sendError(res, err) {
   }
 }
 const dist = resolve(process.cwd(), "dist");
-if (false) {
+if (process.env.NODE_ENV === "production") {
   app.use(express.static(dist, { index: false, maxAge: "1h" }));
   app.get("/{*splat}", (_req, res) => {
     res.sendFile(resolve(dist, "index.html"));
