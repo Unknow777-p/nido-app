@@ -13,6 +13,7 @@ import java.util.Locale
 class NidoAccessibilityService : AccessibilityService() {
 
     private var lastRefresh = 0L
+    private var lastShowLockScreen = 0L
 
     override fun onServiceConnected() {
         serviceInfo = serviceInfo.apply {
@@ -29,8 +30,12 @@ class NidoAccessibilityService : AccessibilityService() {
 
         val pkg = event.packageName?.toString() ?: return
         if (Prefs.locked(applicationContext)) {
-            showBlock("Tiempo de pantalla agotado. Habla con tu tutor.")
-            performGlobalAction(GLOBAL_ACTION_HOME)
+            val nowMs = System.currentTimeMillis()
+            if (nowMs - lastShowLockScreen > 2000L) {
+                showBlock("Tiempo de pantalla agotado. Habla con tu tutor.")
+                performGlobalAction(GLOBAL_ACTION_HOME)
+                lastShowLockScreen = nowMs
+            }
             return
         }
         if (pkg in Prefs.blockedApps(applicationContext)) {
