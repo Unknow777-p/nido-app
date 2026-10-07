@@ -263,7 +263,7 @@ function ChildHome({ token, onUnpair }) {
         setView("browse");
       }, children: [
         /* @__PURE__ */ jsx(Globe, { className: "size-4" }),
-        "Navegador seguro"
+        "Aplicaciones permitidas"
       ] }),
       child.lockReason !== "paused" ? /* @__PURE__ */ jsx(
         Button,
