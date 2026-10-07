@@ -3,16 +3,18 @@ package com.nido.app
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.provider.Settings
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.FrameLayout
+import android.widget.TextView
 
 class MainActivity : Activity() {
 
     private lateinit var webView: WebView
+    private lateinit var lockView: TextView
     private val WEB_URL = "https://nido-app-k7fl.onrender.com"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +25,6 @@ class MainActivity : Activity() {
             settings.domStorageEnabled = true
             webViewClient = object : WebViewClient() {
                 override fun onPageFinished(view: WebView?, url: String?) {
-                    // Almacena el token de dispositivo en Prefs para el servicio nativo
                     view?.evaluateJavascript("""
                         setInterval(function() {
                             var t = localStorage.getItem('nido.device.v1');
@@ -36,23 +37,44 @@ class MainActivity : Activity() {
             loadUrl(WEB_URL)
         }
 
-        val switch = android.widget.Switch(this).apply {
-            text = "Bloqueo"
-            setPadding(16, 8, 16, 8)
-            setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
-            }
+        lockView = TextView(this).apply {
+            text = "⛔\n\nSe acabó el tiempo de pantalla.\nHabla con tu tutor."
+            textSize = 24f
+            setTextColor(0xFFF3EFE6.toInt())
+            setBackgroundColor(0xFF1E4F40.toInt())
+            textAlignment = View.TEXT_ALIGNMENT_CENTER
+            visibility = View.GONE
+            gravity = android.view.Gravity.CENTER
         }
 
-        val root = android.widget.LinearLayout(this).apply {
-            orientation = android.widget.LinearLayout.VERTICAL
-            setBackgroundColor(0xFFF3EFE6.toInt())
+        val root = FrameLayout(this).apply {
+            addView(webView, ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
+            addView(lockView, ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
         }
-        root.addView(switch, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        root.addView(webView, android.widget.LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT, 0, 1f))
 
         setContentView(root)
+
+        // verifica el estado de bloqueo cada 2 segundos
+        Thread {
+            while (true) {
+                val locked = Prefs.locked(applicationContext)
+                runOnUiThread {
+                    lockView.visibility = if (locked) View.VISIBLE else View.GONE
+                }
+                try { Thread.sleep(2000) } catch (_: InterruptedException) { break }
+            }
+        }.start()
+    }
+
+    override fun onBackPressed() {
+        if (Prefs.locked(applicationContext)) {
+            // no permitir salir
+            return
+        }
+        if (webView.canGoBack()) webView.goBack()
+        else super.onBackPressed()
     }
 
     inner class Bridge {
