@@ -37,14 +37,6 @@ class MainActivity : Activity() {
             loadUrl(WEB_URL)
         }
 
-        val switch = android.widget.Switch(this).apply {
-            text = "Activar Nido en Accesibilidad"
-            setPadding(16, 8, 16, 8)
-            setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) startActivity(Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS))
-            }
-        }
-
         lockView = TextView(this).apply {
             text = "⛔\n\nSe acabó el tiempo de pantalla.\nHabla con tu tutor."
             textSize = 24f
@@ -59,7 +51,6 @@ class MainActivity : Activity() {
             orientation = android.widget.LinearLayout.VERTICAL
             setBackgroundColor(0xFF1E4F40.toInt())
         }
-        root.addView(switch, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
 
         val overlay = FrameLayout(this).apply {
             setBackgroundColor(0xFFF3EFE6.toInt())
@@ -117,6 +108,18 @@ class MainActivity : Activity() {
         @JavascriptInterface
         fun setToken(token: String) {
             Prefs.saveToken(applicationContext, token)
+        }
+
+        @JavascriptInterface
+        fun openAccessibilitySettings() {
+            startActivity(Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS))
+        }
+
+        @JavascriptInterface
+        fun isAccessibilityEnabled(): Boolean {
+            val services = android.provider.Settings.Secure.getString(
+                contentResolver, android.provider.Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES) ?: ""
+            return services.contains("NidoAccessibilityService")
         }
     }
 }

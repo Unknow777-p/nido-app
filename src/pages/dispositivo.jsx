@@ -96,6 +96,21 @@ function ChildHome({ token, onUnpair }) {
   const [browseStart, setBrowseStart] = useState("wikipedia.org");
   const [pinError, setPinError] = useState(null);
   const [pinBusy, setPinBusy] = useState(false);
+  const [accessibilityOn, setAccessibilityOn] = useState(false);
+  useEffect(() => {
+    const check = () => {
+      try {
+        if (typeof window.Android !== "undefined" && window.Android.isAccessibilityEnabled) {
+          setAccessibilityOn(!!window.Android.isAccessibilityEnabled());
+        }
+      } catch {
+        void 0;
+      }
+    };
+    check();
+    const id = setInterval(check, 3000);
+    return () => clearInterval(id);
+  }, []);
   useChildKiosk(token);
   const sessionQuery = useQuery({
     queryKey: ["device-session", token],
@@ -228,6 +243,20 @@ function ChildHome({ token, onUnpair }) {
       session.pendingRequest.minutes,
       " min)."
     ] }) : null,
+    {/* interruptor de accesibilidad dentro de la app */}
+    typeof window.Android !== "undefined" && !accessibilityOn ? /* @__PURE__ */ jsx(
+      "button",
+      {
+        type: "button",
+        onClick: () => {
+          try {
+            window.Android && window.Android.openAccessibilitySettings();
+          } catch {}
+        },
+        className: "mt-6 w-full rounded-xl bg-surface-2 p-4 text-left shadow-[var(--shadow-card)]",
+        children: /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-ink", children: "Dar permisos a Nido en Accesibilidad" })
+      }
+    ) : null,
     /* @__PURE__ */ jsxs("div", { className: "mt-8 grid gap-2", children: [
       /* @__PURE__ */ jsxs(Button, { size: "lg", disabled: locked, onClick: () => {
         setBrowseStart("wikipedia.org");
