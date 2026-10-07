@@ -24,6 +24,8 @@ function InstallNido({
     setPlatform(detectInstallPlatform());
   }, []);
   if (hidden) return null;
+  // Dentro de la app Android no mostramos el paso de descargar la app
+  if (typeof window !== 'undefined' && window.Android) return null;
   if (standalone) {
     if (variant === "compact") return null;
     return /* @__PURE__ */ jsx("section", { className: cn("rounded-xl bg-surface p-5 shadow-[var(--shadow-card)]", className), children: /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-3", children: [
