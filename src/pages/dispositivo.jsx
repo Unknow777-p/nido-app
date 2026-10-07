@@ -244,7 +244,7 @@ function ChildHome({ token, onUnpair }) {
       " min)."
     ] }) : null,
     {/* interruptor de accesibilidad dentro de la app */}
-    typeof window.Android !== "undefined" && !accessibilityOn ? /* @__PURE__ */ jsx(
+    {typeof window.Android !== "undefined" && !accessibilityOn ? /* @__PURE__ */ jsx(
       "button",
       {
         type: "button",
@@ -256,7 +256,7 @@ function ChildHome({ token, onUnpair }) {
         className: "mt-6 w-full rounded-xl bg-surface-2 p-4 text-left shadow-[var(--shadow-card)]",
         children: /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-ink", children: "Dar permisos a Nido en Accesibilidad" })
       }
-    ) : null,
+    ) : null},
     /* @__PURE__ */ jsxs("div", { className: "mt-8 grid gap-2", children: [
       /* @__PURE__ */ jsxs(Button, { size: "lg", disabled: locked, onClick: () => {
         setBrowseStart("wikipedia.org");
