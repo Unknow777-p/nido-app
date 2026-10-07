@@ -36,6 +36,11 @@ function SafeBrowser({
       const res = await deviceClassify({ data: { token, url: raw } });
       setResult(res);
       setUrl(raw);
+      if (res.allowed) {
+        // Si está permitido, navegamos realmente en este mismo WebView
+        const target = res.rewriteUrl ?? `https://${res.host}`;
+        window.location.assign(target);
+      }
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "No se pudo revisar");
     } finally {
