@@ -10,6 +10,7 @@ function Landing() {
     /* @__PURE__ */ jsxs("header", { className: "mx-auto flex max-w-5xl items-center justify-between px-5 py-5", children: [
       /* @__PURE__ */ jsx(Wordmark, {}),
       /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
+        /* @__PURE__ */ jsx(Button, { variant: "outline", size: "sm", asChild: true, children: /* @__PURE__ */ jsx(Link, { to: "/dispositivo", children: "Soy niño/estudiante" }) }),
         /* @__PURE__ */ jsx(Button, { size: "sm", asChild: true, children: /* @__PURE__ */ jsx(Link, { to: "/login", children: "Entrar" }) })
       ] })
     ] }),
@@ -39,6 +40,16 @@ function Landing() {
               /* @__PURE__ */ jsx("p", { className: "mt-1 font-medium", children: "21:00 \u2013 07:00" })
             ] })
           ] })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxs("section", { className: "mt-12 grid gap-3 sm:grid-cols-2", children: [
+        /* @__PURE__ */ jsxs(Link, { to: "/login", className: "block rounded-xl bg-primary p-6 text-primary-fg shadow-[var(--shadow-card)] transition hover:opacity-90", children: [
+          /* @__PURE__ */ jsx("p", { className: "font-display text-2xl font-semibold tracking-tight", children: "Soy tutor / padre" }),
+          /* @__PURE__ */ jsx("p", { className: "mt-2 text-sm leading-relaxed opacity-90", children: "Gestiona tiempos, bloqueos y alertas de toda tu familia." })
+        ] }),
+        /* @__PURE__ */ jsxs(Link, { to: "/dispositivo", className: "block rounded-xl bg-surface p-6 text-ink shadow-[var(--shadow-card)] transition hover:opacity-90", children: [
+          /* @__PURE__ */ jsx("p", { className: "font-display text-2xl font-semibold tracking-tight", children: "Soy niño / estudiante" }),
+          /* @__PURE__ */ jsx("p", { className: "mt-2 text-sm leading-relaxed text-muted", children: "Vincula este teléfono o tablet y pon las reglas de Nido." })
         ] })
       ] }),
       /* @__PURE__ */ jsx("section", { className: "mt-16 grid gap-3 sm:grid-cols-2 lg:grid-cols-4", children: [

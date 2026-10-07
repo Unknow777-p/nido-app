@@ -2,168 +2,63 @@ package com.nido.app
 
 import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.view.Gravity
-import android.widget.Button
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.ScrollView
-import android.widget.TextView
-import android.widget.Toast
-import org.json.JSONObject
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import android.view.View
+import android.view.ViewGroup
+import android.webkit.JavascriptInterface
+import android.webkit.WebView
+import android.webkit.WebViewClient
 
 class MainActivity : Activity() {
 
+    private lateinit var webView: WebView
     private val WEB_URL = "https://nido-app-k7fl.onrender.com"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val root = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            gravity = Gravity.CENTER_HORIZONTAL
-            setPadding(48, 96, 48, 48)
-        }
 
-        root.setBackgroundColor(0xFFF3EFE6.toInt())
-        val title = TextView(this).apply {
-            text = "Nido"
-            textSize = 42f
-            setTypeface(null, android.graphics.Typeface.BOLD)
-            setTextColor(0xFF1E4F40.toInt())
-            gravity = Gravity.CENTER
-            setPadding(0, 48, 0, 8)
-        }
-        val subtitle = TextView(this).apply {
-            text = "¿Cómo vas a usar Nido?"
-            textSize = 16f
-            gravity = Gravity.CENTER
-            setTextColor(0xFF4A5D56.toInt())
-            setPadding(0, 0, 0, 48)
-        }
-        val tutorBtn = Button(this).apply {
-            text = "Soy tutor / padre"
-            textSize = 17f
-            setTextColor(0xFFF3EFE6.toInt())
-            setBackgroundColor(0xFF1E4F40.toInt())
-            setPadding(32, 24, 32, 24)
-            setOnClickListener {
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(WEB_URL)))
-            }
-        }
-        val childBtn = Button(this).apply {
-            text = "Soy niño / estudiante"
-            textSize = 17f
-            setTextColor(0xFFF3EFE6.toInt())
-            setBackgroundColor(0xFF1E4F40.toInt())
-            setPadding(32, 24, 32, 24)
-            setOnClickListener { showPairing() }
-        }
-
-        root.addView(title)
-        root.addView(subtitle)
-        root.addView(tutorBtn)
-        root.addView(childBtn)
-
-        val scroll = ScrollView(this).apply {
-            addView(root)
-            setBackgroundColor(0xFFF3EFE6.toInt())
-        }
-        setContentView(scroll)
-    }
-
-    private fun showPairing() {
-        val root = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            setPadding(48, 64, 48, 48)
-            setBackgroundColor(0xFFF3EFE6.toInt())
-        }
-        val backBtn = TextView(this).apply {
-            text = "← Volver"
-            textSize = 16f
-            setTextColor(0xFF1E4F40.toInt())
-            setOnClickListener { recreate() }
-        }
-        val title = TextView(this).apply {
-            text = "Vincular este dispositivo"
-            textSize = 22f
-            setTextColor(0xFF1E4F40.toInt())
-            setPadding(0, 16, 0, 8)
-        }
-        val hint = TextView(this).apply {
-            text = "Pedile al tutor el código de vinculación (en su perfil → Dispositivo → Generar código)."
-            setPadding(0, 0, 0, 16)
-        }
-        val codeInput = EditText(this).apply { this.hint = "Código, ej. XB7K2P" }
-        val status = TextView(this).apply {
-            text = if (Prefs.token(this@MainActivity) != null) "Dispositivo vinculado ✅" else "Sin vincular"
-            setPadding(0, 16, 0, 0)
-        }
-        val pairBtn = Button(this).apply {
-            text = "Vincular"
-            setOnClickListener {
-                val code = codeInput.text.toString().trim()
-                if (code.isBlank()) { Toast.makeText(this@MainActivity, "Escribe el código", Toast.LENGTH_SHORT).show(); return@setOnClickListener }
-                Thread {
-                    runCatching {
-                        val now = Date()
-                        val data = JSONObject()
-                            .put("code", code)
-                            .put("deviceName", android.os.Build.MODEL)
-                            .put("localDate", SimpleDateFormat("yyyy-MM-dd", Locale.US).format(now))
-                            .put("localMinutes", now.hours * 60 + now.minutes)
-                        NidoApi.call(
-                            Prefs.baseUrl(applicationContext), "pairDevice",
-                            com.google.gson.JsonParser.parseString(data.toString()).asJsonObject
-                        )
-                    }.onSuccess {
-                        val token = it.asJsonObject.get("token").asString
-                        Prefs.saveToken(applicationContext, token)
-                        runOnUiThread { status.text = "Dispositivo vinculado ✅"; Toast.makeText(this@MainActivity, "¡Listo!", Toast.LENGTH_SHORT).show() }
-                    }.onFailure {
-                        runOnUiThread { Toast.makeText(this@MainActivity, it.message ?: "Error", Toast.LENGTH_LONG).show() }
-                    }
-                }.start()
-            }
-        }
-        val accessBtn = Button(this).apply {
-            text = "Activar bloqueo (accesibilidad)"
-            setOnClickListener {
-                startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
-            }
-        }
-        val adminBtn = Button(this).apply {
-            text = "Proteger contra desinstalación"
-            setOnClickListener {
-                Toast.makeText(this@MainActivity, "Abriendo ajustes de administrador...", Toast.LENGTH_SHORT).show()
-                try {
-                    val intent = Intent(android.app.admin.DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN)
-                    intent.putExtra(android.app.admin.DevicePolicyManager.EXTRA_DEVICE_ADMIN,
-                        android.content.ComponentName(this@MainActivity, NidoDeviceAdminReceiver::class.java))
-                    intent.putExtra(android.app.admin.DevicePolicyManager.EXTRA_ADD_EXPLANATION,
-                        "Nido necesita ser administrador para evitar que el niño desinstale la app sin permiso.")
-                    startActivity(intent)
-                } catch (e: Exception) {
-                    Toast.makeText(this@MainActivity, "Error: ${e.message}", Toast.LENGTH_LONG).show()
+        webView = WebView(this).apply {
+            settings.javaScriptEnabled = true
+            settings.domStorageEnabled = true
+            webViewClient = object : WebViewClient() {
+                override fun onPageFinished(view: WebView?, url: String?) {
+                    // Almacena el token de dispositivo en Prefs para el servicio nativo
+                    view?.evaluateJavascript("""
+                        setInterval(function() {
+                            var t = localStorage.getItem('nido.device.v1');
+                            if (t) { Android.setToken(t); }
+                        }, 3000);
+                    """.trimIndent(), null)
                 }
             }
+            addJavascriptInterface(Bridge(), "Android")
+            loadUrl(WEB_URL)
         }
-        root.addView(backBtn)
-        root.addView(title)
-        root.addView(hint)
-        root.addView(codeInput)
-        root.addView(pairBtn)
-        root.addView(status)
-        root.addView(accessBtn)
-        root.addView(adminBtn)
-        val scroll = ScrollView(this).apply {
-            addView(root)
+
+        val switch = android.widget.Switch(this).apply {
+            text = "Bloqueo"
+            setPadding(16, 8, 16, 8)
+            setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
+            }
+        }
+
+        val root = android.widget.LinearLayout(this).apply {
+            orientation = android.widget.LinearLayout.VERTICAL
             setBackgroundColor(0xFFF3EFE6.toInt())
         }
-        setContentView(scroll)
+        root.addView(switch, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        root.addView(webView, android.widget.LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT, 0, 1f))
+
+        setContentView(root)
+    }
+
+    inner class Bridge {
+        @JavascriptInterface
+        fun setToken(token: String) {
+            Prefs.saveToken(applicationContext, token)
+        }
     }
 }
