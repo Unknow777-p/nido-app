@@ -36,11 +36,6 @@ function SafeBrowser({
       const res = await deviceClassify({ data: { token, url: raw } });
       setResult(res);
       setUrl(raw);
-      if (res.allowed) {
-        // Si está permitido, navegamos realmente en este mismo WebView
-        const target = res.rewriteUrl ?? `https://${res.host}`;
-        window.location.assign(target);
-      }
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "No se pudo revisar");
     } finally {
@@ -88,7 +83,7 @@ function SafeBrowser({
         },
         children: [
           /* @__PURE__ */ jsx(Input, { value: url, onChange: (e) => setUrl(e.target.value), placeholder: "sitio.com" }),
-          /* @__PURE__ */ jsx(Button, { type: "submit", disabled: busy, children: "Ir" })
+          /* @__PURE__ */ jsx(Button, { type: "submit", disabled: busy, children: "Buscar" })
         ]
       }
     ),
@@ -140,6 +135,7 @@ function AllowedPanel({ result, sourceUrl }) {
     /* @__PURE__ */ jsx("p", { className: "text-sm font-medium", children: "Permitido en este perfil" }),
     /* @__PURE__ */ jsx("p", { className: "mt-1 text-sm text-muted", children: result.reason }),
     result.host ? /* @__PURE__ */ jsx("p", { className: "mt-2 font-mono text-xs text-subtle", children: result.host }) : null,
+    /* @__PURE__ */ jsx(Button, { className: "mt-3", onClick: () => window.location.assign(result.rewriteUrl ?? `https://${result.host}`), children: "Navegar" }),
     /* @__PURE__ */ jsx("p", { className: "mt-3 text-xs leading-relaxed text-subtle", children: "Nido no suelta el control a otra pesta\xF1a. El contenido se queda aquí o se bloquea en este navegador." })
   ] });
 }
