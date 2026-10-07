@@ -77,7 +77,7 @@ function ChildDetailPage() {
         bedtimeEnd: child.bedtimeEnd,
         dayLimits,
         week,
-        onSaved: () => queryClient.invalidateQueries({ queryKey: ["child", childId] })
+        onSaved: () => queryClient.invalidateQueries()
       }
     ) : null,
     tab === "filtros" ? /* @__PURE__ */ jsx(
@@ -86,7 +86,7 @@ function ChildDetailPage() {
         childId,
         filters,
         appToggles,
-        onSaved: () => queryClient.invalidateQueries({ queryKey: ["child", childId] })
+        onSaved: () => queryClient.invalidateQueries()
       }
     ) : null,
     tab === "sitios" ? /* @__PURE__ */ jsx(
@@ -95,7 +95,7 @@ function ChildDetailPage() {
         childId,
         blocked,
         allowed,
-        onSaved: () => queryClient.invalidateQueries({ queryKey: ["child", childId] })
+        onSaved: () => queryClient.invalidateQueries()
       }
     ) : null,
     tab === "dispositivo" ? /* @__PURE__ */ jsx(
@@ -107,7 +107,7 @@ function ChildDetailPage() {
         lastSeenAt: child.lastSeenAt,
         online: child.online,
         pairingCode,
-        onSaved: () => queryClient.invalidateQueries({ queryKey: ["child", childId] })
+        onSaved: () => queryClient.invalidateQueries()
       }
     ) : null,
     tab === "actividad" ? /* @__PURE__ */ jsx("ul", { className: "space-y-2", children: activity.length === 0 ? /* @__PURE__ */ jsx("li", { className: "text-sm text-muted", children: "Todav\xEDa no hay actividad." }) : activity.map((row) => /* @__PURE__ */ jsxs("li", { className: "rounded-md bg-surface px-3 py-3 text-sm shadow-[var(--shadow-card)]", children: [
