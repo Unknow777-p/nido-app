@@ -51,9 +51,10 @@ class NidoAccessibilityService : AccessibilityService() {
         val token = Prefs.token(applicationContext) ?: return
         Thread {
             runCatching {
+                val url = if (host.startsWith("http://") || host.startsWith("https://")) host else "https://$host"
                 val res = NidoApi.call(
                     Prefs.baseUrl(applicationContext), "deviceClassify",
-                    JSONObject().put("token", token).put("url", "https://$host").let {
+                    JSONObject().put("token", token).put("url", url).let {
                         com.google.gson.JsonParser.parseString(it.toString()).asJsonObject
                     }
                 )
