@@ -30,11 +30,10 @@ class NidoAccessibilityService : AccessibilityService() {
 
         val pkg = event.packageName?.toString() ?: return
         if (Prefs.locked(applicationContext)) {
-            val nowMs = System.currentTimeMillis()
-            if (nowMs - lastShowLockScreen > 2000L) {
+            val currentPackage = event.packageName?.toString() ?: ""
+            if (currentPackage != this@NidoAccessibilityService.packageName) {
                 showBlock("Tiempo de pantalla agotado. Habla con tu tutor.")
                 performGlobalAction(GLOBAL_ACTION_HOME)
-                lastShowLockScreen = nowMs
             }
             return
         }
