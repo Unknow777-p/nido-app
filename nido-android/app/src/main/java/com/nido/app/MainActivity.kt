@@ -56,14 +56,32 @@ class MainActivity : Activity() {
 
         setContentView(root)
 
-        // verifica el estado de bloqueo cada 2 segundos
+        // verifica el estado de bloqueo cada 5 segundos via servidor
         Thread {
             while (true) {
-                val locked = Prefs.locked(applicationContext)
-                runOnUiThread {
-                    lockView.visibility = if (locked) View.VISIBLE else View.GONE
+                runCatching {
+                    val token = Prefs.token(applicationContext)
+                    if (token == null) {
+                        Prefs.saveLocked(applicationContext, false)
+                    } else {
+                        val now = java.util.Date()
+                        val data = org.json.JSONObject()
+                            .put("token", token)
+                            .put("localDate", java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.US).format(now))
+                            .put("localMinutes", now.hours * 60 + now.minutes)
+                        val res = NidoApi.call(
+                            Prefs.baseUrl(applicationContext), "deviceSession",
+                            com.google.gson.JsonParser.parseString(data.toString()).asJsonObject
+                        )
+                        val child = res.asJsonObject.getAsJsonObject("session").getAsJsonObject("child")
+                        val realLocked = child.get("locked").asBoolean
+                        Prefs.saveLocked(applicationContext, realLocked)
+                    }
                 }
-                try { Thread.sleep(2000) } catch (_: InterruptedException) { break }
+                runOnUiThread {
+                    lockView.visibility = if (Prefs.locked(applicationContext)) View.VISIBLE else View.GONE
+                }
+                try { Thread.sleep(5000) } catch (_: InterruptedException) { break }
             }
         }.start()
     }
