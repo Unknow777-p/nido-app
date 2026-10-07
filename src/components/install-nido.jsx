@@ -30,7 +30,7 @@ function InstallNido({
       /* @__PURE__ */ jsx("span", { className: "grid size-10 shrink-0 place-items-center rounded-lg bg-primary text-primary-fg", children: /* @__PURE__ */ jsx(Check, { className: "size-5" }) }),
       /* @__PURE__ */ jsxs("div", { children: [
         /* @__PURE__ */ jsx("h2", { className: "font-display text-xl font-semibold tracking-tight", children: "Nido est\xE1 en este aparato" }),
-        /* @__PURE__ */ jsx("p", { className: "mt-1 text-sm leading-relaxed text-muted", children: "Se abre como una app, sin barra del navegador. El tutor sigue viendo el tiempo desde su tel\xE9fono." })
+        /* @__PURE__ */ jsx("p", { className: "mt-1 text-sm leading-relaxed text-muted", children: "Se descarga la app de Nido como APK. El tutor sigue viendo el tiempo desde su teléfono." })
       ] })
     ] }) });
   }
@@ -59,10 +59,10 @@ function InstallNido({
         /* @__PURE__ */ jsx("p", { className: "text-sm font-medium", children: title }),
         /* @__PURE__ */ jsx("p", { className: "mt-1 text-sm leading-relaxed text-muted", children: lead }),
         /* @__PURE__ */ jsxs("div", { className: "mt-3 flex flex-wrap gap-2", children: [
-          deferred ? /* @__PURE__ */ jsxs(Button, { size: "sm", onClick: () => void installNow(), disabled: busy, children: [
+          /* @__PURE__ */ jsx(Button, { size: "sm", asChild: true, children: /* @__PURE__ */ jsx("a", { href: "/nido-debug.apk", download: true, children: [
             /* @__PURE__ */ jsx(Download, { className: "size-4" }),
-            "Instalar"
-          ] }) : /* @__PURE__ */ jsx(Button, { size: "sm", type: "button", onClick: () => setOpen((v) => !v), children: open ? "Ocultar pasos" : "Ver pasos" }),
+            "Descargar APK"
+          ] }) }),
           audience === "family" ? /* @__PURE__ */ jsx(
             "button",
             {
@@ -88,10 +88,10 @@ function InstallNido({
         /* @__PURE__ */ jsx("p", { className: "mt-1 text-sm leading-relaxed text-muted", children: lead })
       ] })
     ] }),
-    deferred ? /* @__PURE__ */ jsxs(Button, { className: "mt-5 w-full", size: "lg", onClick: () => void installNow(), disabled: busy, children: [
+    /* @__PURE__ */ jsx(Button, { className: "mt-5 w-full", size: "lg", asChild: true, children: /* @__PURE__ */ jsx("a", { href: "/nido-debug.apk", download: true, children: [
       /* @__PURE__ */ jsx(Download, { className: "size-4" }),
-      "Instalar Nido"
-    ] }) : null,
+      "Descargar APK"
+    ] }) }),
     platform === "desktop" ? /* @__PURE__ */ jsxs("div", { className: "mt-5 grid gap-3 sm:grid-cols-2", children: [
       /* @__PURE__ */ jsx(StepsCard, { platform: "android" }),
       /* @__PURE__ */ jsx(StepsCard, { platform: "ios" })
@@ -108,9 +108,9 @@ function StepsCard({ platform }) {
       { icon: Share, text: "Pulsa Compartir, el cuadrado con la flecha." },
       { icon: SquarePlus, text: "Elige A\xF1adir a pantalla de inicio y confirma." }
     ] : [
-      { icon: Smartphone, text: "Abre Nido en Chrome." },
-      { icon: Share, text: "Pulsa los tres puntos, arriba a la derecha." },
-      { icon: SquarePlus, text: "Elige Instalar app o A\xF1adir a pantalla de inicio." }
+      { icon: Smartphone, text: "En tu Android, abre Nido y pulsa Descargar APK." },
+      { icon: Share, text: "Permite instalar apps de fuentes desconocidas si te lo pide." },
+      { icon: SquarePlus, text: "Abre el APK descargado y pulsa Instalar." }
     ]).map((step, i) => /* @__PURE__ */ jsxs("li", { className: "flex gap-3 text-sm leading-relaxed text-muted", children: [
       /* @__PURE__ */ jsx("span", { className: "grid size-8 shrink-0 place-items-center rounded-full bg-surface-2 text-xs font-semibold text-ink", children: i + 1 }),
       /* @__PURE__ */ jsxs("span", { className: "flex items-start gap-2 pt-1", children: [
