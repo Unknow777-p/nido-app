@@ -17,6 +17,7 @@ import {
   addChild,
   getFamily,
   grantExtraTime,
+  revokeExtraTime,
   respondTimeRequest,
   setChildPaused
 } from "@/lib/family/api";
@@ -185,6 +186,15 @@ function Dashboard() {
           } catch (err) {
             toast.error(err instanceof Error ? err.message : "No se pudo pausar");
           }
+        },
+        onRemoveExtra: async () => {
+          try {
+            await revokeExtraTime({ data: { childId: child.id, localDate: clock().localDate } });
+            await queryClient.invalidateQueries({ queryKey: ["family"] });
+            toast.success(`Tiempo extra quitado a ${child.name}`);
+          } catch (err) {
+            toast.error(err instanceof Error ? err.message : "No se pudo quitar tiempo");
+          }
         }
       },
       child.id
@@ -194,7 +204,8 @@ function Dashboard() {
 function ChildCard({
   child,
   onGrant,
-  onPause
+  onPause,
+  onRemoveExtra
 }) {
   const status = child.lockReason === "paused" ? "Pausado" : child.lockReason === "bedtime" ? "Hora de dormir" : child.lockReason === "week" ? "Tope semanal" : child.lockReason === "time" ? "Tiempo agotado" : "Activo";
   const weekPct = Math.min(100, child.usedWeekSeconds / Math.max(1, child.weeklyMinutes * 60) * 100);
@@ -240,6 +251,7 @@ function ChildCard({
     /* @__PURE__ */ jsxs("div", { className: "mt-4 grid grid-cols-2 gap-2", children: [
       /* @__PURE__ */ jsx(Button, { variant: "outline", size: "sm", asChild: true, children: /* @__PURE__ */ jsx(Link, { to: `/app/${child.id}`, children: "Ajustar" }) }),
       /* @__PURE__ */ jsx(Button, { variant: "secondary", size: "sm", onClick: () => onGrant(15), children: "+15 min" }),
+      child.extraTodayMinutes > 0 ? /* @__PURE__ */ jsx(Button, { variant: "outline", size: "sm", onClick: () => onRemoveExtra(), children: `Quitar +${child.extraTodayMinutes} min` }) : null,
       /* @__PURE__ */ jsxs(
         Button,
         {

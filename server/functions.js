@@ -439,6 +439,16 @@ const grantExtraTime = createServerFn({ method: "POST" }).middleware([authMiddle
   await logActivity(sql, child.id, context.userId, "grant", `+${data.minutes} min extra`);
   return { ok: true };
 });
+const revokeExtraTime = createServerFn({ method: "POST" }).middleware([authMiddleware]).validator(
+  (input) => z.object({ childId: z.string(), localDate: localDateSchema }).parse(input)
+).handler(async ({ context, data }) => {
+  const sql = await getSql();
+  const child = await childOwned(sql, context.userId, data.childId);
+  if (!child) throw new Error("Perfil no encontrado.");
+  await sql`delete from extra_grants where child_id = ${child.id} and day = ${data.localDate}`;
+  await logActivity(sql, child.id, context.userId, "grant", "Tiempo extra quitado");
+  return { ok: true };
+});
 const setChildPaused = createServerFn({ method: "POST" }).middleware([authMiddleware]).validator((input) => z.object({ childId: z.string(), paused: z.boolean() }).parse(input)).handler(async ({ context, data }) => {
   const sql = await getSql();
   const child = await childOwned(sql, context.userId, data.childId);
@@ -718,6 +728,7 @@ export {
   getChildDetail,
   getFamily,
   grantExtraTime,
+  revokeExtraTime,
   listPayments,
   openBillingPortal,
   pairDevice,
