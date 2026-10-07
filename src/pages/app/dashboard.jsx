@@ -190,7 +190,7 @@ function Dashboard() {
         onRemoveExtra: async () => {
           try {
             await revokeExtraTime({ data: { childId: child.id, localDate: clock().localDate } });
-            await queryClient.invalidateQueries({ queryKey: ["family"] });
+            await queryClient.invalidateQueries();
             toast.success(`Tiempo extra quitado a ${child.name}`);
           } catch (err) {
             toast.error(err instanceof Error ? err.message : "No se pudo quitar tiempo");
