@@ -190,6 +190,16 @@ function Dashboard() {
         onRemoveExtra: async () => {
           try {
             await revokeExtraTime({ data: { childId: child.id, localDate: clock().localDate } });
+            // actualización local inmediata
+            await queryClient.setQueryData(["family", getActiveFamilyId()], (old) => {
+              if (!old) return old;
+              return {
+                ...old,
+                children: old.children.map((c) =>
+                  c.id === child.id ? { ...c, extraTodayMinutes: 0 } : c
+                )
+              };
+            });
             await queryClient.invalidateQueries();
             toast.success(`Tiempo extra quitado a ${child.name}`);
           } catch (err) {
