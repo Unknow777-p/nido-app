@@ -3,6 +3,8 @@ package com.nido.app
 import android.accessibilityservice.AccessibilityService
 import android.accessibilityservice.AccessibilityServiceInfo
 import android.content.Intent
+import android.os.Handler
+import android.os.Looper
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 import org.json.JSONObject
@@ -14,6 +16,14 @@ class NidoAccessibilityService : AccessibilityService() {
 
     private var lastRefresh = 0L
     private var lastShowLockScreen = 0L
+    private var lockedScreenShown = false
+    private val handler = Handler(Looper.getMainLooper())
+    private val heartbeat = object : Runnable {
+        override fun run() {
+            maybeRefresh()
+            handler.postDelayed(this, 30_000)
+        }
+    }
 
     override fun onServiceConnected() {
         serviceInfo = serviceInfo.apply {
@@ -22,6 +32,7 @@ class NidoAccessibilityService : AccessibilityService() {
             notificationTimeout = 500
             flags = flags or AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS
         }
+        handler.post(heartbeat)
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
@@ -30,8 +41,14 @@ class NidoAccessibilityService : AccessibilityService() {
 
         val pkg = event.packageName?.toString() ?: return
         if (Prefs.locked(applicationContext)) {
-            // silencio: mejor mostrarlo dentro de la app Principal
+            if (!lockedScreenShown) {
+                lockedScreenShown = true
+                showBlock("Tiempo de pantalla agotado. Habla con tu tutor.")
+                performGlobalAction(GLOBAL_ACTION_HOME)
+            }
             return
+        } else {
+            lockedScreenShown = false
         }
         if (pkg in Prefs.blockedApps(applicationContext)) {
             reportTamper("App bloqueada: $pkg")
@@ -78,7 +95,7 @@ class NidoAccessibilityService : AccessibilityService() {
 
     private fun maybeRefresh() {
         val nowMs = System.currentTimeMillis()
-        if (nowMs - lastRefresh < 30_000L) return
+        if (nowMs - lastRefresh < 20_000L) return
         lastRefresh = nowMs
         val token = Prefs.token(applicationContext) ?: return
         Thread {
@@ -141,7 +158,20 @@ class NidoAccessibilityService : AccessibilityService() {
             "com.brave.browser",
             "com.opera.browser",
             "com.sec.android.app.sbrowser",
-            "com.android.vending"
+            "com.android.vending",
+            "com.huawei.browser",
+            "org.mozilla.firefox_beta",
+            "com.vivaldi.browser",
+            "com.uc.browser.en",
+            "com.opera.mini.native",
+            "mobi.mgeek.dolphin",
+            "com.duckduckgo.mobile.android",
+            "com.yandex.browser",
+            "com.mi.globalbrowser",
+            "com.ecosia.browser",
+            "com.silk.browser",
+            "com.browser.dfxv",
+            "com.turkin.browser"
         )
 
         // Id de catálogo de Nido → paquete Android
