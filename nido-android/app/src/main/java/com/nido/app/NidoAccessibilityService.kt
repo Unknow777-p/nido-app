@@ -16,7 +16,6 @@ class NidoAccessibilityService : AccessibilityService() {
 
     private var lastRefresh = 0L
     private var lastShowLockScreen = 0L
-    private var lockedScreenShown = false
     private val handler = Handler(Looper.getMainLooper())
     private val heartbeat = object : Runnable {
         override fun run() {
@@ -41,14 +40,15 @@ class NidoAccessibilityService : AccessibilityService() {
 
         val pkg = event.packageName?.toString() ?: return
         if (Prefs.locked(applicationContext)) {
-            if (!lockedScreenShown) {
-                lockedScreenShown = true
+            val nowMs = System.currentTimeMillis()
+            if (nowMs - lastShowLockScreen > 10_000L) {
+                lastShowLockScreen = nowMs
                 showBlock("Tiempo de pantalla agotado. Habla con tu tutor.")
                 performGlobalAction(GLOBAL_ACTION_HOME)
             }
             return
         } else {
-            lockedScreenShown = false
+            lastShowLockScreen = 0L
         }
         if (pkg in Prefs.blockedApps(applicationContext)) {
             reportTamper("App bloqueada: $pkg")
