@@ -221,8 +221,8 @@ function ChildCard({
       ] }),
       /* @__PURE__ */ jsx("span", { className: "rounded-full bg-bg px-2.5 py-1 text-xs font-medium text-muted", children: status })
     ] }),
-    /* @__PURE__ */ jsxs("div", { className: "mt-4 flex items-center justify-between gap-3", children: [
-      /* @__PURE__ */ jsx(TimeRing, { remaining: child.remainingSeconds, total: child.limitTodayMinutes * 60, size: 128 }),
+    /* @__PURE__ */ jsxs("div", { className: "mt-4 flex items-start gap-3 overflow-hidden", children: [
+      /* @__PURE__ */ jsx(TimeRing, { remaining: child.remainingSeconds, total: child.limitTodayMinutes * 60, size: 96 }),
       /* @__PURE__ */ jsxs("div", { className: "min-w-0 space-y-2 text-sm", children: [
         /* @__PURE__ */ jsxs("p", { className: "flex items-center gap-2 text-muted", children: [
           /* @__PURE__ */ jsx(Clock3, { className: "size-4 shrink-0" }),
