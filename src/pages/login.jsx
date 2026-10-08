@@ -24,14 +24,16 @@ function Login() {
     setError(null);
     setBusy(true);
     try {
+      let target = "/app";
       if (mode === "up") {
-        const res = await authClient.signUp.email({ email, password, name: name || "padre" });
+        const res = await authClient.signUp.email({ email, password, name: name || "Padre" });
         if (res.error) throw new Error(res.error.message || "No se pudo crear la cuenta.");
+        target = "/onboarding";
       } else {
         const res = await authClient.signIn.email({ email, password });
         if (res.error) throw new Error(res.error.message || "Correo o contrase\xF1a no v\xE1lidos.");
       }
-      await navigate("/");
+      await navigate(target);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error al entrar.");
     } finally {
