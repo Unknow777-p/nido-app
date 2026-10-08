@@ -49,7 +49,6 @@ function AppShell() {
         )
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "flex min-w-0 items-center gap-3", children: [
-        /* @__PURE__ */ jsx("p", { className: "hidden truncate text-sm text-muted sm:block", children: familyQuery.data.family.name }),
         /* @__PURE__ */ jsx(UserButton, {})
       ] })
     ] }) }),

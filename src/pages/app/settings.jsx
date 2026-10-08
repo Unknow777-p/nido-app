@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label";
 import { clock, clockFamily } from "@/lib/family/clock";
 import { getActiveFamilyId, setActiveFamilyId } from "@/lib/family/active";
 import { changePin, getFamily, renameFamily } from "@/lib/family/api";
+import { useCurrentUser } from "@/lib/auth/use-current-user";
 
 function SettingsPage() {
   const queryClient = useQueryClient();
@@ -22,6 +23,7 @@ function SettingsPage() {
   const [name, setName] = useState("");
   const [currentPin, setCurrentPin] = useState("");
   const [newPin, setNewPin] = useState("");
+  const currentUser = useCurrentUser();
 
   useEffect(() => {
     if (familyQuery.data?.family.name) setName(familyQuery.data.family.name);
@@ -81,9 +83,9 @@ function SettingsPage() {
         /* @__PURE__ */ jsx(Button, { type: "submit", onClick: () => rename.mutate(), children: "Guardar" }),
         /* @__PURE__ */ jsx("h2", { className: "pt-4 font-display text-xl font-semibold", children: "Perfil de usuario" }),
         /* @__PURE__ */ jsx(Label, { htmlFor: "profile-name", children: "Nombre completo" }),
-        /* @__PURE__ */ jsx(Input, { id: "profile-name", placeholder: "Tu nombre", disabled: true }),
+        /* @__PURE__ */ jsx(Input, { id: "profile-name", value: currentUser?.displayName ?? "", disabled: true, readOnly: true }),
         /* @__PURE__ */ jsx(Label, { htmlFor: "profile-email", children: "Correo" }),
-        /* @__PURE__ */ jsx(Input, { id: "profile-email", placeholder: "tu@correo.com", disabled: true })
+        /* @__PURE__ */ jsx(Input, { id: "profile-email", value: currentUser?.primaryEmail ?? "", disabled: true, readOnly: true })
       ] }) : null,
 
       activeTab === "membresia" ? /* @__PURE__ */ jsxs("section", { className: "space-y-3", children: [
