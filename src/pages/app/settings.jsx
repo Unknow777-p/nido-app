@@ -96,6 +96,31 @@ function SettingsPage() {
         ]
       }
     ),
+    /* Perfil de usuario */
+    /* @__PURE__ */ jsxs(
+      "section",
+      {
+        className: "space-y-3",
+        children: [
+          /* @__PURE__ */ jsx("h2", { className: "font-display text-xl font-semibold", children: "Perfil de usuario" }),
+          /* @__PURE__ */ jsx(Label, { htmlFor: "profile-name", children: "Nombre completo" }),
+          /* @__PURE__ */ jsx(Input, { id: "profile-name", placeholder: "Tu nombre", disabled: true }),
+          /* @__PURE__ */ jsx(Label, { htmlFor: "profile-email", children: "Correo" }),
+          /* @__PURE__ */ jsx(Input, { id: "profile-email", placeholder: "tu@correo.com", disabled: true }),
+          /* @__PURE__ */ jsx("h3", { className: "mt-4 font-medium", children: "Métodos de pago" }),
+          /* @__PURE__ */ jsx("p", { className: "text-sm text-muted", children: "Sólo como ejemplo. No se aceptan pagos por ahora." }),
+          /* @__PURE__ */ jsx(Button, { className: "mt-1", disabled: true, children: "Agregar tarjeta" }),
+          /* @__PURE__ */ jsx("h3", { className: "mt-4 font-medium", children: "Cambiar contraseña" }),
+          /* @__PURE__ */ jsx(Input, { type: "password", placeholder: "Contraseña actual", disabled: true }),
+          /* @__PURE__ */ jsx(Input, { type: "password", placeholder: "Contraseña nueva", disabled: true }),
+          /* @__PURE__ */ jsx(Button, { disabled: true, children: "Cambiar contraseña" }),
+          /* @__PURE__ */ jsx("h3", { className: "mt-4 font-medium", children: "PIN de la app" }),
+          /* @__PURE__ */ jsx(Input, { type: "password", placeholder: "PIN actual", disabled: true }),
+          /* @__PURE__ */ jsx(Input, { type: "password", placeholder: "PIN nuevo", disabled: true }),
+          /* @__PURE__ */ jsx(Button, { disabled: true, children: "Guardar PIN" })
+        ]
+      }
+    ),
     /* @__PURE__ */ jsx(InstallNido, { audience: "family" }),
     /* @__PURE__ */ jsxs("section", { className: "space-y-2", children: [
       /* @__PURE__ */ jsx("h2", { className: "font-display text-xl font-semibold", children: "Ayuda" }),
