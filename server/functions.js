@@ -213,6 +213,11 @@ const createFamily = createServerFn({ method: "POST" }).middleware([authMiddlewa
   }).parse(input)
 ).handler(async ({ context, data }) => {
   const sql = await getSql();
+  const existing = await sql`select id from families where user_id = ${context.userId} limit 1`;
+  if (existing.length > 0) {
+    const existingChild = await sql`select id from children where family_id = ${existing[0].id} limit 1`;
+    return { familyId: existing[0].id, childId: existingChild.length > 0 ? existingChild[0].id : null };
+  }
   const defaults = defaultsForAge(data.ageBand);
   const familyId = newId();
   const childId = newId();
