@@ -221,7 +221,7 @@ function ChildCard({
       /* @__PURE__ */ jsx("span", { className: "rounded-full bg-bg px-2.5 py-1 text-xs font-medium text-muted", children: status })
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "mt-4 flex-col sm:flex-row flex gap-3", children: [
-      /* @__PURE__ */ jsxs("div", { className: "rounded-xl bg-surface-2 p-4 text-center shadow-[var(--shadow-card)]", children: [
+      /* @__PURE__ */ jsxs("div", { className: "rounded-xl bg-surface-2 p-4 text-center shadow-[var(--shadow-card)] flex flex-col items-center justify-center", children: [
         /* @__PURE__ */ jsx("p", { className: "font-display text-2xl font-semibold text-ink", children: formatSeconds(child.remainingSeconds) }),
         /* @__PURE__ */ jsx("p", { className: "text-xs text-muted", children: "restantes" })
       ] }),
