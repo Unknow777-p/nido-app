@@ -28,7 +28,7 @@ function TimeRing({
         }
       )
     ] }),
-    /* @__PURE__ */ jsx("div", { className: "absolute inset-0 grid place-items-center text-center", children: /* @__PURE__ */ jsxs("div", { children: [
+    /* @__PURE__ */ jsx("div", { className: "absolute inset-0 flex flex-col items-center justify-center text-center", children: /* @__PURE__ */ jsxs("div", { children: [
       /* @__PURE__ */ jsx("p", { className: "font-display text-2xl font-semibold tabular-nums leading-none tracking-tight text-ink", style: { fontSize: size * 0.24 }, children: formatSeconds(remaining) }),
       /* @__PURE__ */ jsx("p", { className: "mt-1 text-xs text-muted", style: { fontSize: size * 0.1 }, children: "restantes" })
     ] }) })

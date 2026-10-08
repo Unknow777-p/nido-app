@@ -115,7 +115,7 @@ function ChildHome({ token, onUnpair }) {
   const sessionQuery = useQuery({
     queryKey: ["device-session", token],
     queryFn: () => deviceSession({ data: { token, ...clock() } }),
-    refetchInterval: 1e4,
+    refetchInterval: 5e3,
     retry: false
   });
   useEffect(() => {
@@ -132,7 +132,7 @@ function ChildHome({ token, onUnpair }) {
       }
     }
     void beat();
-    const id = window.setInterval(() => void beat(), 1e4);
+    const id = window.setInterval(() => void beat(), 5e3);
     return () => {
       cancelled = true;
       window.clearInterval(id);

@@ -26,7 +26,7 @@ function Dashboard() {
   const familyQuery = useQuery({
     queryKey: ["family", getActiveFamilyId()],
     queryFn: () => getFamily({ data: clockFamily() }),
-    refetchInterval: 12e3
+    refetchInterval: 5e3
   });
   const data = familyQuery.data;
   const [showAdd, setShowAdd] = useState(false);
