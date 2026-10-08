@@ -19,7 +19,7 @@ function Landing() {
         /* @__PURE__ */ jsxs("div", { children: [
           /* @__PURE__ */ jsx("p", { className: "text-sm font-medium uppercase tracking-[0.14em] text-moss", children: "Control parental claro" }),
           /* @__PURE__ */ jsx("h1", { className: "mt-3 font-display text-4xl font-semibold leading-tight tracking-tight md:text-5xl", children: "El tiempo en pantalla, en familia." }),
-          /* @__PURE__ */ jsx("p", { className: "mt-4 max-w-md text-base leading-relaxed text-muted", children: "Nido asigna un cupo semanal, bloquea contenido sexual y peligroso, y te deja vigilar el uso desde tu tel\xE9fono \u2014 con un PIN que solo el tutor conoce. 30 d\xEDas de prueba, luego $3.99 al mes por familia." }),
+          /* @__PURE__ */ jsx("p", { className: "mt-4 max-w-md text-base leading-relaxed text-muted", children: "Nido asigna un cupo semanal, bloquea contenido sexual y peligroso, y te deja vigilar el uso desde tu tel\xE9fono \u2014 con un PIN que solo el padre conoce. 30 d\xEDas de prueba, luego $3.99 al mes por familia." }),
           /* @__PURE__ */ jsxs("div", { className: "mt-7 flex flex-col gap-3 sm:flex-row", children: [
             /* @__PURE__ */ jsx(Button, { size: "lg", asChild: true, children: /* @__PURE__ */ jsx(Link, { to: "/login", children: "Crear familia" }) }),
           ] })
@@ -94,7 +94,7 @@ function Landing() {
           /* @__PURE__ */ jsx(Smartphone, { className: "size-5 text-primary" }),
           /* @__PURE__ */ jsx("h3", { className: "mt-3 font-display text-xl font-semibold tracking-tight", children: "En la pantalla de inicio" }),
           /* @__PURE__ */ jsx("p", { className: "mt-2 text-sm leading-relaxed text-muted", children: "Hoy se instala desde el navegador, como una app. El PIN, la pausa remota y el registro de saltos ponen palos en la rueda. El bot\xF3n atr\xE1s no saca del modo ni\xF1o." }),
-          /* @__PURE__ */ jsx("p", { className: "mt-3 text-sm leading-relaxed text-muted", children: "Controla el tiempo, bloquea sitios y apps, y administra todo desde tu cuenta de tutor." })
+          /* @__PURE__ */ jsx("p", { className: "mt-3 text-sm leading-relaxed text-muted", children: "Controla el tiempo, bloquea sitios y apps, y administra todo desde tu cuenta de padre." })
         ] })
       ] }),
       /* @__PURE__ */ jsx("div", { id: "instalar", className: "mt-16 scroll-mt-8", children: /* @__PURE__ */ jsx(InstallNido, { audience: "family" }) }),

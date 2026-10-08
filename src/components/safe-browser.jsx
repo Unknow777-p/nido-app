@@ -62,7 +62,7 @@ function SafeBrowser({
   if (locked) {
     return /* @__PURE__ */ jsxs("main", { className: "mx-auto flex min-h-dvh max-w-md flex-col items-center justify-center px-5 py-6 text-center", children: [
       /* @__PURE__ */ jsx("h1", { className: "font-display text-2xl font-semibold tracking-tight", children: "Tiempo en pausa" }),
-      /* @__PURE__ */ jsx("p", { className: "mt-2 text-sm text-muted", children: "El cupo de hoy se acab\xF3 o es hora de dormir. Pide m\xE1s minutos al tutor." }),
+      /* @__PURE__ */ jsx("p", { className: "mt-2 text-sm text-muted", children: "El cupo de hoy se acab\xF3 o es hora de dormir. Pide m\xE1s minutos al padre." }),
       /* @__PURE__ */ jsx(Button, { className: "mt-6", variant: "outline", onClick: onBack, children: "Volver" })
     ] });
   }
@@ -116,7 +116,7 @@ function BlockedPanel({ result }) {
     /* @__PURE__ */ jsx("p", { className: "mt-2 font-display text-xl font-semibold tracking-tight", children: "Este sitio no es para ti" }),
     /* @__PURE__ */ jsx("p", { className: "mt-1 text-sm text-muted", children: result.reason }),
     result.host ? /* @__PURE__ */ jsx("p", { className: "mt-2 font-mono text-xs text-subtle", children: result.host }) : null,
-    /* @__PURE__ */ jsx("p", { className: "mt-3 text-xs leading-relaxed text-subtle", children: "El tutor ya recibi\xF3 este intento en su tel\xE9fono. Nido no abre la p\xE1gina." })
+    /* @__PURE__ */ jsx("p", { className: "mt-3 text-xs leading-relaxed text-subtle", children: "El padre ya recibi\xF3 este intento en su tel\xE9fono. Nido no abre la p\xE1gina." })
   ] });
 }
 function AllowedPanel({ result, sourceUrl }) {

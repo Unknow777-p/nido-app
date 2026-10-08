@@ -25,7 +25,7 @@ function Login() {
     setBusy(true);
     try {
       if (mode === "up") {
-        const res = await authClient.signUp.email({ email, password, name: name || "Tutor" });
+        const res = await authClient.signUp.email({ email, password, name: name || "padre" });
         if (res.error) throw new Error(res.error.message || "No se pudo crear la cuenta.");
       } else {
         const res = await authClient.signIn.email({ email, password });
@@ -40,7 +40,7 @@ function Login() {
   }
   return /* @__PURE__ */ jsx("main", { className: "grid min-h-dvh place-items-center px-5 py-10", children: /* @__PURE__ */ jsxs("div", { className: "w-full max-w-sm", children: [
     /* @__PURE__ */ jsx(Link, { to: "/", className: "inline-flex", children: /* @__PURE__ */ jsx(Wordmark, {}) }),
-    /* @__PURE__ */ jsx("h1", { className: "mt-8 font-display text-3xl font-semibold tracking-tight", children: "Entrar como tutor" }),
+    /* @__PURE__ */ jsx("h1", { className: "mt-8 font-display text-3xl font-semibold tracking-tight", children: "Entrar como padre" }),
     /* @__PURE__ */ jsx("p", { className: "mt-2 text-sm text-muted", children: "Usa la misma cuenta en tu tel\xE9fono para vigilar el tiempo." }),
     isPending ? /* @__PURE__ */ jsx("div", { className: "mt-8 h-40 animate-pulse rounded-lg bg-surface-2" }) : /* @__PURE__ */ jsxs(Fragment, { children: [
       /* @__PURE__ */ jsxs("form", { className: "space-y-3", onSubmit: onEmail, children: [

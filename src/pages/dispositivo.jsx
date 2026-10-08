@@ -55,7 +55,7 @@ function PairScreen({ onPaired }) {
   return /* @__PURE__ */ jsxs("main", { className: "mx-auto flex min-h-dvh max-w-sm flex-col justify-center px-5 py-10", children: [
     /* @__PURE__ */ jsx(NestMark, { className: "size-12" }),
     /* @__PURE__ */ jsx("h1", { className: "mt-4 font-display text-3xl font-semibold tracking-tight", children: "Vincular dispositivo" }),
-    /* @__PURE__ */ jsx("p", { className: "mt-2 text-sm leading-relaxed text-muted", children: "En el tel\xE9fono del tutor: perfil del ni\xF1o \u2192 Dispositivo \u2192 Generar c\xF3digo. Caduca en 15 minutos." }),
+    /* @__PURE__ */ jsx("p", { className: "mt-2 text-sm leading-relaxed text-muted", children: "En el tel\xE9fono del padre: perfil del ni\xF1o \u2192 Dispositivo \u2192 Generar c\xF3digo. Caduca en 15 minutos." }),
     /* @__PURE__ */ jsxs(
       "form",
       {
@@ -239,7 +239,7 @@ function ChildHome({ token, onUnpair }) {
       ] })
     ] }),
     session.pendingRequest ? /* @__PURE__ */ jsxs("p", { className: "mt-6 rounded-lg bg-surface-2 px-4 py-3 text-center text-sm", children: [
-      "Esperando respuesta del tutor (",
+      "Esperando respuesta del padre (",
       session.pendingRequest.minutes,
       " min)."
     ] }) : null,
@@ -275,14 +275,14 @@ function ChildHome({ token, onUnpair }) {
             try {
               await deviceRequestTime({ data: { token, minutes: 15, reason: "Un rato m\xE1s" } });
               await queryClient.invalidateQueries({ queryKey: ["device-session", token] });
-              toast.success("Petici\xF3n enviada al tutor");
+              toast.success("Petici\xF3n enviada al padre");
             } catch (e) {
               toast.error(e instanceof Error ? e.message : "No se pudo pedir");
             }
           },
           children: "Pedir 15 minutos"
         }
-      ) : /* @__PURE__ */ jsx("p", { className: "px-2 text-center text-sm leading-relaxed text-muted", children: "Cuando tu tutor pulse Reanudar en su tel\xE9fono, Nido vuelve a abrirse." })
+      ) : /* @__PURE__ */ jsx("p", { className: "px-2 text-center text-sm leading-relaxed text-muted", children: "Cuando tu padre pulse Reanudar en su tel\xE9fono, Nido vuelve a abrirse." })
     ] }),
     /* @__PURE__ */ jsx(InstallNido, { variant: "compact", audience: "device", className: "mt-6" }),
     /* @__PURE__ */ jsxs("section", { className: "mt-8", children: [
@@ -310,7 +310,7 @@ function ChildHome({ token, onUnpair }) {
 function lockCopy(child) {
   switch (child.lockReason) {
     case "paused":
-      return "Tu tutor paus\xF3 este dispositivo";
+      return "Tu padre paus\xF3 este dispositivo";
     case "bedtime":
       return `Hora de dormir \xB7 hasta las ${child.bedtimeEnd ?? "ma\xF1ana"}`;
     case "week":

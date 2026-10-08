@@ -32,7 +32,7 @@ function InstallNido({
       /* @__PURE__ */ jsx("span", { className: "grid size-10 shrink-0 place-items-center rounded-lg bg-primary text-primary-fg", children: /* @__PURE__ */ jsx(Check, { className: "size-5" }) }),
       /* @__PURE__ */ jsxs("div", { children: [
         /* @__PURE__ */ jsx("h2", { className: "font-display text-xl font-semibold tracking-tight", children: "Nido est\xE1 en este aparato" }),
-        /* @__PURE__ */ jsx("p", { className: "mt-1 text-sm leading-relaxed text-muted", children: "Se descarga la app de Nido como APK. El tutor sigue viendo el tiempo desde su teléfono." })
+        /* @__PURE__ */ jsx("p", { className: "mt-1 text-sm leading-relaxed text-muted", children: "Se descarga la app de Nido como APK. El padre sigue viendo el tiempo desde su teléfono." })
       ] })
     ] }) });
   }
