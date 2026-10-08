@@ -2,6 +2,7 @@ import { jsx, jsxs } from "react/jsx-runtime";
 import { Link } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import { Smartphone, Monitor } from "lucide-react";
 import { toast } from "sonner";
 
 import { PlanCard } from "@/components/plan-card";
@@ -13,6 +14,20 @@ import { getActiveFamilyId, setActiveFamilyId } from "@/lib/family/active";
 import { changePin, getFamily, renameFamily } from "@/lib/family/api";
 import { authClient } from "@/lib/auth/client";
 import { useCurrentUser } from "@/lib/auth/use-current-user";
+
+function DownloadTile({ icon: Icon, title, subtitle, href, disabled }) {
+  const body = /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
+    /* @__PURE__ */ jsx(Icon, { className: "size-6 text-primary" }),
+    /* @__PURE__ */ jsxs("div", { children: [
+      /* @__PURE__ */ jsx("p", { className: "font-medium", children: title }),
+      /* @__PURE__ */ jsx("p", { className: "text-sm text-muted", children: subtitle })
+    ] })
+  ] });
+  if (disabled) {
+    return /* @__PURE__ */ jsx("div", { className: "block rounded-xl bg-surface p-4 shadow-[var(--shadow-card)] opacity-50", children: body });
+  }
+  return /* @__PURE__ */ jsx("a", { href, download: true, className: "block rounded-xl bg-surface p-4 shadow-[var(--shadow-card)] hover:bg-surface-2", children: body });
+}
 
 function SettingsPage() {
   const queryClient = useQueryClient();
@@ -154,8 +169,10 @@ function SettingsPage() {
       activeTab === "descargas" ? /* @__PURE__ */ jsxs("section", { className: "space-y-3", children: [
         /* @__PURE__ */ jsx("h2", { className: "font-display text-xl font-semibold", children: "Descargar app" }),
         /* @__PURE__ */ jsx("p", { className: "text-sm text-muted", children: "Elige tu plataforma para descargar la app de Nido." }),
-        /* @__PURE__ */ jsx(Button, { asChild: true, className: "mt-2", children: /* @__PURE__ */ jsx("a", { href: "/nido-debug.apk", download: true, children: "Android (APK)" }) }),
-        /* @__PURE__ */ jsx(Button, { disabled: true, className: "mt-2", children: "Windows (EXE) — próximamente" })
+        /* @__PURE__ */ jsxs("div", { className: "mt-4 grid gap-3 sm:grid-cols-2", children: [
+          /* @__PURE__ */ jsx(DownloadTile, { icon: Smartphone, title: "Android APK", subtitle: "Descargar", href: "/nido-debug.apk" }),
+          /* @__PURE__ */ jsx(DownloadTile, { icon: Monitor, title: "Windows EXE", subtitle: "Próximamente", disabled: true })
+        ] })
       ] }) : null,
 
       activeTab === "dispositivos" ? /* @__PURE__ */ jsxs("section", { className: "space-y-3", children: [
