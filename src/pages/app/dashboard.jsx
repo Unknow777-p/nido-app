@@ -5,7 +5,6 @@ import { Clock3, Pause, Play, Plus } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { AvatarBlob } from "@/components/avatar-blob";
-import { TimeRing } from "@/components/time-ring";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -222,7 +221,10 @@ function ChildCard({
       /* @__PURE__ */ jsx("span", { className: "rounded-full bg-bg px-2.5 py-1 text-xs font-medium text-muted", children: status })
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "mt-4 flex-col sm:flex-row flex gap-3", children: [
-      /* @__PURE__ */ jsx(TimeRing, { remaining: child.remainingSeconds, total: child.limitTodayMinutes * 60, size: 96 }),
+      /* @__PURE__ */ jsxs("div", { className: "rounded-xl bg-surface-2 p-4 text-center shadow-[var(--shadow-card)]", children: [
+        /* @__PURE__ */ jsx("p", { className: "font-display text-2xl font-semibold text-ink", children: formatSeconds(child.remainingSeconds) }),
+        /* @__PURE__ */ jsx("p", { className: "text-xs text-muted", children: "restantes" })
+      ] }),
       /* @__PURE__ */ jsxs("div", { className: "min-w-0 space-y-2 text-sm", children: [
         /* @__PURE__ */ jsxs("p", { className: "flex items-center gap-2 text-muted", children: [
           /* @__PURE__ */ jsx(Clock3, { className: "size-4 shrink-0" }),
