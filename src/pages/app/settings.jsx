@@ -169,9 +169,33 @@ function SettingsPage() {
       activeTab === "descargas" ? /* @__PURE__ */ jsxs("section", { className: "space-y-3", children: [
         /* @__PURE__ */ jsx("h2", { className: "font-display text-xl font-semibold", children: "Descargar app" }),
         /* @__PURE__ */ jsx("p", { className: "text-sm text-muted", children: "Elige tu plataforma para descargar la app de Nido." }),
-        /* @__PURE__ */ jsxs("div", { className: "mt-4 grid gap-3 sm:grid-cols-2", children: [
-          /* @__PURE__ */ jsx(DownloadTile, { icon: Smartphone, title: "Android APK", subtitle: "Descargar", href: "/nido-debug.apk" }),
-          /* @__PURE__ */ jsx(DownloadTile, { icon: Monitor, title: "Windows EXE", subtitle: "Próximamente", disabled: true })
+        /* @__PURE__ */ jsxs("div", { className: "mt-6 space-y-6", children: [
+          /* @__PURE__ */ jsx("h3", { className: "font-display text-lg font-semibold text-ink", children: "Apps para móviles" }),
+          /* @__PURE__ */ jsxs("div", { className: "grid gap-3 sm:grid-cols-2", children: [
+            /* @__PURE__ */ jsxs("a", { href: "/nido-debug.apk", download: true, className: "group relative rounded-xl bg-surface p-5 shadow-[var(--shadow-card)] hover:bg-surface-2", children: [
+              /* @__PURE__ */ jsx(Smartphone, { className: "absolute top-5 left-5 size-8 text-primary" }),
+              /* @__PURE__ */ jsx("p", { className: "ml-14 font-display text-xl font-semibold text-ink", children: "Nido para Android" }),
+              /* @__PURE__ */ jsx("p", { className: "mt-5 inline-flex rounded-full bg-primary px-5 py-2 text-sm font-medium text-primary-fg", children: "Descargar" })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "rounded-xl bg-surface p-5 opacity-50 shadow-[var(--shadow-card)] relative", children: [
+              /* @__PURE__ */ jsx(Monitor, { className: "absolute top-5 left-5 size-8 text-primary" }),
+              /* @__PURE__ */ jsx("p", { className: "ml-14 font-display text-xl font-semibold text-ink", children: "Nido para iPhone y iPad" }),
+              /* @__PURE__ */ jsx("p", { className: "mt-5 inline-flex rounded-full bg-primary/80 px-5 py-2 text-sm font-medium text-ink", children: "Próximamente" })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsx("h3", { className: "font-display text-lg font-semibold text-ink", children: "Apps para computadora" }),
+          /* @__PURE__ */ jsxs("div", { className: "grid gap-3 sm:grid-cols-2", children: [
+            /* @__PURE__ */ jsxs("div", { className: "rounded-xl bg-surface p-5 opacity-50 shadow-[var(--shadow-card)] relative", children: [
+              /* @__PURE__ */ jsx(Monitor, { className: "absolute top-5 left-5 size-8 text-primary" }),
+              /* @__PURE__ */ jsx("p", { className: "ml-14 font-display text-xl font-semibold text-ink", children: "Nido para Windows / Mac / Linux" }),
+              /* @__PURE__ */ jsx("p", { className: "mt-5 inline-flex rounded-full bg-primary/80 px-5 py-2 text-sm font-medium text-ink", children: "Próximamente" })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "rounded-xl bg-surface p-5 opacity-50 shadow-[var(--shadow-card)] relative", children: [
+              /* @__PURE__ */ jsx(Monitor, { className: "absolute top-5 left-5 size-8 text-primary" }),
+              /* @__PURE__ */ jsx("p", { className: "ml-14 font-display text-xl font-semibold text-ink", children: "Nido para macOS" }),
+              /* @__PURE__ */ jsx("p", { className: "mt-5 inline-flex rounded-full bg-primary/80 px-5 py-2 text-sm font-medium text-ink", children: "Próximamente" })
+            ] })
+          ] })
         ] })
       ] }) : null,
 
