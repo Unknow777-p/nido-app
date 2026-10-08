@@ -52,7 +52,7 @@ function Onboarding() {
       /* @__PURE__ */ jsx("div", { className: "mt-10", children: /* @__PURE__ */ jsx(
         PinPad,
         {
-          title: "Elige el PIN del tutor",
+          title: "Elige el PIN del padre",
           hint: "4 a 6 d\xEDgitos. Lo usar\xE1s para salir del modo ni\xF1o.",
           error,
           onSubmit: (pin) => {

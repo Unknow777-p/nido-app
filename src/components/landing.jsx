@@ -44,7 +44,7 @@ function Landing() {
       ] }),
       /* @__PURE__ */ jsxs("section", { className: "mt-12 grid gap-3 sm:grid-cols-2", children: [
         /* @__PURE__ */ jsxs(Link, { to: "/login", className: "block rounded-xl bg-primary p-6 text-primary-fg shadow-[var(--shadow-card)] transition hover:opacity-90", children: [
-          /* @__PURE__ */ jsx("p", { className: "font-display text-2xl font-semibold tracking-tight", children: "Soy tutor / padre" }),
+          /* @__PURE__ */ jsx("p", { className: "font-display text-2xl font-semibold tracking-tight", children: "Soy padre" }),
           /* @__PURE__ */ jsx("p", { className: "mt-2 text-sm leading-relaxed opacity-90", children: "Gestiona tiempos, bloqueos y alertas de toda tu familia." })
         ] }),
         /* @__PURE__ */ jsxs(Link, { to: "/dispositivo", className: "block rounded-xl bg-surface p-6 text-ink shadow-[var(--shadow-card)] transition hover:opacity-90", children: [
@@ -70,7 +70,7 @@ function Landing() {
         },
         {
           icon: KeyRound,
-          title: "PIN de tutor",
+          title: "PIN de padre",
           body: "Salir del modo ni\xF1o o cambiar l\xEDmites requiere el PIN. Tras 5 fallos, 15 min de espera."
         }
       ].map((item) => /* @__PURE__ */ jsxs("article", { className: "rounded-xl bg-surface p-4 shadow-[var(--shadow-card)]", children: [

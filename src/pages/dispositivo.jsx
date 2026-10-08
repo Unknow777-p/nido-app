@@ -169,7 +169,7 @@ function ChildHome({ token, onUnpair }) {
       /* @__PURE__ */ jsx(
         PinPad,
         {
-          title: "PIN del tutor",
+          title: "PIN del padre",
           hint: "Para salir de este dispositivo",
           error: pinError,
           busy: pinBusy,
