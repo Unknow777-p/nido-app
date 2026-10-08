@@ -5,8 +5,6 @@ import { Clock3, Pause, Play, Plus } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { AvatarBlob } from "@/components/avatar-blob";
-import { InstallNido } from "@/components/install-nido";
-import { PlanBanner } from "@/components/plan-card";
 import { TimeRing } from "@/components/time-ring";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -49,7 +47,6 @@ function Dashboard() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["family"] })
   });
   if (!data) return null;
-  const unpaired = data.children.filter((c) => !c.devicePaired);
   return /* @__PURE__ */ jsxs("div", { className: "space-y-8", children: [
     /* @__PURE__ */ jsxs("div", { className: "flex items-end justify-between gap-3", children: [
       /* @__PURE__ */ jsxs("div", { children: [
@@ -98,16 +95,7 @@ function Dashboard() {
         }
       )
     ] }) : null,
-    /* @__PURE__ */ jsx(PlanBanner, { plan: data.plan, onPay: () => navigate("/app/ajustes") }),
-    unpaired.length > 0 ? /* @__PURE__ */ jsxs("section", { className: "rounded-xl bg-surface p-4 shadow-[var(--shadow-card)]", children: [
-      /* @__PURE__ */ jsx("h2", { className: "text-sm font-medium", children: "Siguiente paso" }),
-      /* @__PURE__ */ jsxs("p", { className: "mt-1 text-sm leading-relaxed text-muted", children: [
-        "Instala Nido en la tablet de ",
-        unpaired.map((c) => c.name).join(", "),
-        " (pantalla de inicio) y luego vinc\xFAlala. En su perfil: Dispositivo \u2192 Generar c\xF3digo. En el otro aparato, abre Nido \u2192 Vincular."
-      ] })
-    ] }) : null,
-    /* @__PURE__ */ jsx(InstallNido, { variant: "compact", audience: "family" }),
+
     data.children.some((c) => c.blockedToday > 0 || c.tamperToday > 0) ? /* @__PURE__ */ jsxs("section", { className: "rounded-xl bg-surface p-4 shadow-[var(--shadow-card)]", children: [
       /* @__PURE__ */ jsx("h2", { className: "text-sm font-medium", children: "Alertas de hoy" }),
       /* @__PURE__ */ jsx("ul", { className: "mt-3 space-y-2 text-sm", children: data.children.filter((c) => c.blockedToday > 0 || c.tamperToday > 0).map((c) => /* @__PURE__ */ jsxs("li", { className: "flex flex-wrap items-baseline justify-between gap-2", children: [

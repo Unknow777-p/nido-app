@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { BookOpen, Globe, Moon, Pause } from "lucide-react";
 import { toast } from "sonner";
 import { NestMark } from "@/components/mark";
-import { InstallNido } from "@/components/install-nido";
+
 import { PinPad } from "@/components/pin-pad";
 import { SafeBrowser } from "@/components/safe-browser";
 import { TimeRing } from "@/components/time-ring";
@@ -83,7 +83,7 @@ function PairScreen({ onPaired }) {
         ]
       }
     ),
-    /* @__PURE__ */ jsx(InstallNido, { variant: "compact", audience: "device", className: "mt-8" }),
+
     /* @__PURE__ */ jsx(Link, { to: "/", className: "mt-4 text-center text-sm text-muted underline-offset-4 hover:underline", children: "Volver" })
   ] });
 }
@@ -284,7 +284,7 @@ function ChildHome({ token, onUnpair }) {
         }
       ) : /* @__PURE__ */ jsx("p", { className: "px-2 text-center text-sm leading-relaxed text-muted", children: "Cuando tu padre pulse Reanudar en su tel\xE9fono, Nido vuelve a abrirse." })
     ] }),
-    /* @__PURE__ */ jsx(InstallNido, { variant: "compact", audience: "device", className: "mt-6" }),
+
     /* @__PURE__ */ jsxs("section", { className: "mt-8", children: [
       /* @__PURE__ */ jsx("h2", { className: "text-sm font-medium text-muted", children: "Destinos permitidos" }),
       /* @__PURE__ */ jsx("ul", { className: "mt-3 grid grid-cols-2 gap-2", children: SAFE_DESTINATIONS.map((d) => /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsxs(
