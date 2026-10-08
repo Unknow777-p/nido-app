@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label";
 import { clock, clockFamily } from "@/lib/family/clock";
 import { getActiveFamilyId, setActiveFamilyId } from "@/lib/family/active";
 import { changePin, getFamily, renameFamily } from "@/lib/family/api";
+import { authClient } from "@/lib/auth/client";
 import { useCurrentUser } from "@/lib/auth/use-current-user";
 
 function SettingsPage() {
@@ -23,6 +24,9 @@ function SettingsPage() {
   const [name, setName] = useState("");
   const [currentPin, setCurrentPin] = useState("");
   const [newPin, setNewPin] = useState("");
+  const [passwordCurrent, setPasswordCurrent] = useState("");
+  const [passwordNew, setPasswordNew] = useState("");
+  const [passwordBusy, setPasswordBusy] = useState(false);
   const currentUser = useCurrentUser();
 
   useEffect(() => {
@@ -122,10 +126,26 @@ function SettingsPage() {
           ),
           /* @__PURE__ */ jsx(Button, { type: "submit", disabled: currentPin.length < 4 || newPin.length < 4, children: "Actualizar PIN" })
         ] }),
-        /* @__PURE__ */ jsx("h2", { className: "pt-4 font-display text-xl font-semibold", children: "PIN de la app" }),
-        /* @__PURE__ */ jsx(Input, { type: "password", placeholder: "PIN actual", disabled: true }),
-        /* @__PURE__ */ jsx(Input, { type: "password", placeholder: "PIN nuevo", disabled: true }),
-        /* @__PURE__ */ jsx(Button, { disabled: true, children: "Guardar PIN" }),
+        /* @__PURE__ */ jsxs("form", { className: "space-y-3", onSubmit: async (e) => {
+          e.preventDefault();
+          setPasswordBusy(true);
+          try {
+            await authClient.changePassword({ currentPassword: passwordCurrent, newPassword: passwordNew });
+            toast.success("Contraseña actualizada");
+            setPasswordCurrent("");
+            setPasswordNew("");
+          } catch (err) {
+            toast.error(err instanceof Error ? err.message : "No se pudo cambiar la contraseña");
+          } finally {
+            setPasswordBusy(false);
+          }
+        }, children: [
+          /* @__PURE__ */ jsx("h2", { className: "pt-4 font-display text-xl font-semibold", children: "Cambiar contraseña" }),
+          /* @__PURE__ */ jsx(Input, { type: "password", placeholder: "Contraseña actual", autoComplete: "current-password", value: passwordCurrent, onChange: (e) => setPasswordCurrent(e.target.value) }),
+          /* @__PURE__ */ jsx(Input, { type: "password", placeholder: "Contraseña nueva", autoComplete: "new-password", value: passwordNew, onChange: (e) => setPasswordNew(e.target.value) }),
+          /* @__PURE__ */ jsx(Button, { type: "submit", disabled: passwordCurrent.length < 4 || passwordNew.length < 4 || passwordBusy, children: "Cambiar contraseña" })
+        ] }),
+
         /* @__PURE__ */ jsx("h2", { className: "pt-4 font-display text-xl font-semibold", children: "Seguridad" }),
         /* @__PURE__ */ jsx("p", { className: "text-sm leading-relaxed text-muted", children: "El PIN no es tu cuenta. Es la llave para salir del modo niño. Tras cinco intentos fallidos se bloquea un cuarto de hora. El código de vinculación es de un solo uso y caduca. Desde tu teléfono puedes pausar el dispositivo al instante: el niño no puede reanudarlo." })
       ] }) : null,
