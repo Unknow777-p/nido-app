@@ -59,7 +59,8 @@ function SettingsPage() {
     { id: "membresia", label: "Membresía" },
     { id: "seguridad", label: "Seguridad" },
     { id: "dispositivos", label: "Dispositivos" },
-    { id: "perfiles", label: "Perfiles" }
+    { id: "perfiles", label: "Perfiles" },
+    { id: "descargas", label: "Descargar app" }
   ];
 
   return /* @__PURE__ */ jsxs("div", { className: "flex rounded-xl bg-surface p-4 shadow-[var(--shadow-card)]", children: [
@@ -148,6 +149,13 @@ function SettingsPage() {
 
         /* @__PURE__ */ jsx("h2", { className: "pt-4 font-display text-xl font-semibold", children: "Seguridad" }),
         /* @__PURE__ */ jsx("p", { className: "text-sm leading-relaxed text-muted", children: "El PIN no es tu cuenta. Es la llave para salir del modo niño. Tras cinco intentos fallidos se bloquea un cuarto de hora. El código de vinculación es de un solo uso y caduca. Desde tu teléfono puedes pausar el dispositivo al instante: el niño no puede reanudarlo." })
+      ] }) : null,
+
+      activeTab === "descargas" ? /* @__PURE__ */ jsxs("section", { className: "space-y-3", children: [
+        /* @__PURE__ */ jsx("h2", { className: "font-display text-xl font-semibold", children: "Descargar app" }),
+        /* @__PURE__ */ jsx("p", { className: "text-sm text-muted", children: "Elige tu plataforma para descargar la app de Nido." }),
+        /* @__PURE__ */ jsx(Button, { asChild: true, className: "mt-2", children: /* @__PURE__ */ jsx("a", { href: "/nido-debug.apk", download: true, children: "Android (APK)" }) }),
+        /* @__PURE__ */ jsx(Button, { disabled: true, className: "mt-2", children: "Windows (EXE) — próximamente" })
       ] }) : null,
 
       activeTab === "dispositivos" ? /* @__PURE__ */ jsxs("section", { className: "space-y-3", children: [
