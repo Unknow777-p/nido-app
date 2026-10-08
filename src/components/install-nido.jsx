@@ -16,7 +16,7 @@ function InstallNido({
 }) {
   const deferred = useInstallStore((s) => s.deferred);
   const standalone = useInstallStore((s) => s.standalone);
-  const [platform, setPlatform] = useState("desktop");
+  const [platform, setPlatform] = useState(() => detectInstallPlatform());
   const [busy, setBusy] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [open, setOpen] = useState(false);
@@ -26,6 +26,7 @@ function InstallNido({
   if (hidden) return null;
   // Dentro de la app Android no mostramos el paso de descargar la app
   if (typeof window !== 'undefined' && window.Android) return null;
+  if (platform === "desktop") return null;
   if (standalone) {
     if (variant === "compact") return null;
     return /* @__PURE__ */ jsx("section", { className: cn("rounded-xl bg-surface p-5 shadow-[var(--shadow-card)]", className), children: /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-3", children: [
